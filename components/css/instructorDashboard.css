@@ -1,0 +1,60 @@
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.instructorDashboard {
+  /* padding: 1rem;
+  padding-top: 1rem; */
+}
+
+.instructorDashboard h1 {
+  color: #343a40;
+  font-size: 2rem;
+}
+
+.dashboard p {
+  color: #6c757d;
+}
+
+.instructorDashboardNavbar {
+  height: 4rem;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instructorDashboardNavbar-brand a,
+.instructorDashboardSpan {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.instructorDashboardButton {
+  height: 2rem;
+  width: 6rem;
+  border: 1px solid #2e89c6;
+  background-color: #2e89c6;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.instructorDashboardBody {
+  /* background-color: red; */
+  height: 100vh;
+  width: 100%;
+  background-image: url("./images/exam.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.instructorDashboardHead1 {
+  text-align: center;
+  padding-top: 1rem;
+}

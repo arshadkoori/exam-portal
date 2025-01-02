@@ -1,0 +1,21 @@
+.exam-container {
+    background-color: #f9f9f9;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .question-container {
+    margin-bottom: 15px;
+  }
+  
+  .question-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .question-container li {
+    padding: 5px 0;
+  }
+  
