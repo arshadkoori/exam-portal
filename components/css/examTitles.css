@@ -1,4 +1,8 @@
-/* General styles for the Exam Titles page */
+/* .examTitlesBody {
+  background: linear-gradient(to bottom, #e9ecef, #f7f8fc);
+  font-family: "Arial", sans-serif;
+}
+
 .exam-title-container {
   display: flex;
   flex-direction: column;
@@ -9,25 +13,25 @@
   justify-content: flex-start;
 }
 
-/* Header styling */
-h2 {
-  font-size: 2.5rem;
+.examTitlesBodyHead2 {
+  font-size: 2rem;
   color: #333;
   margin-bottom: 30px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
+  padding-top: 2rem;
 }
 
-/* Styling for the individual exam title items */
 .exam-title {
   background-color: #ffffff;
   padding: 20px;
   margin: 15px 0;
   border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
@@ -43,7 +47,6 @@ h2 {
   height: 2rem;
 }
 
-/* Hover effect for the exam title items */
 .exam-title:hover {
   background-color: #007bff;
   color: white;
@@ -52,21 +55,91 @@ h2 {
   border-left: 5px solid #0056b3;
 }
 
-/* Add a smooth transition when an item is clicked */
 .exam-title:active {
   transform: scale(0.98);
 }
 
-/* If no exams are available */
 .exam-title-container p {
   text-align: center;
   font-size: 1.2rem;
   color: #666;
   font-style: italic;
+} */
+
+
+/* Main Body */
+.examTitlesBody {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  padding: 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Optional: Add a subtle background gradient to make the page stand out */
-body {
-  background: linear-gradient(to bottom, #e9ecef, #f7f8fc);
-  font-family: 'Arial', sans-serif;
+/* Heading Style */
+.examTitlesBodyHead2 {
+  font-size: 2.3rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #2e89c6;
+  padding-bottom: 10px;
+  width: fit-content;
+}
+
+/* Exam Title Card */
+.exam-title {
+  background-color: #ffffff;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-size: 1.4rem;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+/* Hover Effect on Exam Title */
+.exam-title:hover {
+  background-color: #2e89c6;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-color: #2e89c6;
+}
+
+/* Empty State (No exams available) */
+.examTitlesBody p {
+  font-size: 1.3rem;
+  color: #7d7d7d;
+  text-align: center;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .examTitlesBody {
+    padding: 20px;
+  }
+
+  .examTitlesBodyHead2 {
+    font-size: 1.8rem;
+  }
+
+  .exam-title {
+    font-size: 1.2rem;
+    padding: 15px;
+  }
 }

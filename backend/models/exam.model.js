@@ -1,22 +1,19 @@
 
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-// const examSchema = new mongoose.Schema({
-//   questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
-// });
+// Define the Exam Schema
+const examSchema = new mongoose.Schema(
+  {
+    examTitle: { type: String, required: true }, // Exam title is required
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }], // Array of question references
+    instructorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor', required: true }, // Reference to Instructor model
+    instructorName: { type: String, required: true }, // Instructor name added for consistency with the request body
+  },
+  { timestamps: true } // This will add `createdAt` and `updatedAt` fields automatically
+);
 
-// const Exam = mongoose.model('Exam', examSchema);
-
-// export default Exam;
-
-
-import mongoose from "mongoose";
-
-const examSchema = new mongoose.Schema({
-  examTitle: { type: String, required: true },
-  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
-});
-
-const Exam = mongoose.model("Exam", examSchema);
+// Create the Exam model
+const Exam = mongoose.model('Exam', examSchema);
 
 export default Exam;
+

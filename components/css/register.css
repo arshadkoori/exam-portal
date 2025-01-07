@@ -1,8 +1,5 @@
 .registerMain {
-  font-family: 'Roboto', sans-serif;
-  /* background: linear-gradient(135deg, #4facfe, #00f2fe); */
-  /* margin: 0; */
-  /* padding: 0; */
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +9,6 @@
 }
 
 .registerImgContainer {
-  /* background-color: red; */
   height: 70rem;
   width: 70rem;
 }
@@ -117,6 +113,22 @@
 }
 
 @media (max-width: 768px) {
+  .registerDiv {
+    padding: 15px;
+  }
+
+  .registerForm input,
+  .registerForm select,
+  .registerForm button {
+    font-size: 14px;
+  }
+
+  .registerImgContainer img {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
   .registerDiv {
     padding: 15px;
   }

@@ -1,9 +1,9 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 import "./css/addExam.css";
+import { useNavigate } from "react-router-dom";
 
 const AddExam = () => {
   const [questions, setQuestions] = useState([
@@ -13,8 +13,20 @@ const AddExam = () => {
       correctAnswer: "",
     },
   ]);
-
   const [examTitle, setExamTitle] = useState("");
+  const [instructorDetails, setInstructorDetails] = useState(null); // Store instructor details
+  const navigate = useNavigate();
+
+  // Fetch instructor details from localStorage
+  useEffect(() => {
+    const storedInstructor = localStorage.getItem("instructor");
+    if (storedInstructor) {
+      setInstructorDetails(JSON.parse(storedInstructor)); // Parse instructor details
+    } else {
+      toast.error("Instructor details not found. Please log in again.");
+      navigate("/instructor-dashboard");
+    }
+  }, [navigate]);
 
   const handleQuestionChange = (index, field, value) => {
     setQuestions((prevQuestions) => {
@@ -46,8 +58,12 @@ const AddExam = () => {
       const response = await axios.post("/api/exam", {
         examTitle,
         questions,
+        instructorId: instructorDetails?.id, // Use instructor ID from localStorage
+        instructorName: instructorDetails?.name, // Use instructor name from localStorage
       });
+
       toast.success("Exam created successfully!");
+      navigate("/instructor-dashboard");
       console.log("Response from server:", response.data);
     } catch (error) {
       toast.error(
@@ -58,22 +74,22 @@ const AddExam = () => {
   };
 
   return (
-    <div>
+    <div className="addExamContainer">
       <h2>Create Exam</h2>
       <form onSubmit={handleSubmit} className="addExamForm">
         <div className="addExamFormDiv">
-          <label className="addExamForm">Exam Title</label>
+          <label className="addExamFormLabel">Exam Title</label>
           <input
             type="text"
             placeholder="Enter exam title"
             value={examTitle}
             onChange={(e) => setExamTitle(e.target.value)}
-            className="addExamFormTitle"
+            className="addExamFormInput"
           />
         </div>
 
         {questions.map((q, index) => (
-          <div key={index} className="question-container">
+          <div key={index} className="questionContainer">
             <div>
               <label>Question Text</label>
               <input
@@ -85,7 +101,7 @@ const AddExam = () => {
                 }
               />
             </div>
-            <div>
+            <div className="answerContainer">
               <label>Options</label>
               {q.options.map((opt, optIndex) => (
                 <input
@@ -121,10 +137,16 @@ const AddExam = () => {
         ))}
 
         <div className="addExamButtons">
-          <button type="button" onClick={addQuestion} className="addExamButtonsSubmit">
+          <button
+            type="button"
+            onClick={addQuestion}
+            className="addExamButtonsAdd"
+          >
             Add Question
           </button>
-          <button type="submit" className="addExamButtonsSubmit">Submit Exam</button>
+          <button type="submit" className="addExamButtonsSubmit">
+            Submit Exam
+          </button>
         </div>
       </form>
     </div>

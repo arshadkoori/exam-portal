@@ -28,8 +28,8 @@ const ExamTitles = () => {
   };
 
   return (
-    <div>
-      <h2>Exam Titles</h2>
+    <div className="examTitlesBody">
+      <h2 className="examTitlesBodyHead2">Exam Titles</h2>
       {exams.length === 0 ? (
         <p>No exams available</p>
       ) : (

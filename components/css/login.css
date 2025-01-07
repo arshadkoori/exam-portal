@@ -14,7 +14,7 @@
 .loginImgContainer {
   /* background-color: red; */
   height: 70rem;
-  width: 70rem;
+  width: 90rem;
 }
 
 .loginImgContainer img {
@@ -31,12 +31,12 @@
   height: 100vh;
 }
 
-.loginrDiv {
+.loginDiv {
   background: #ffffff;
   padding: 30px 20px;
   border-radius: 10px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  width: 350px;
   max-width: 90%;
   text-align: center;
 }
@@ -98,5 +98,9 @@
   .loginForm input,
   .loginSubmit {
     font-size: 14px;
+  }
+
+  .loginImgContainer img {
+    display: none;
   }
 }

@@ -1,38 +1,42 @@
-// export default function InstructorDashboard() {
-//     return(
-//         <h1>Instructor dashboard</h1>
-//     )
-// }
-
 import React from "react";
 import "./css/instructorDashboard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import exam from "./images/exam.png";
+import instructor_dashboard from "./images/instructor_dashboard.png";
 
 export default function InstructorDashboard() {
+  const navigate = useNavigate();
+
   return (
     <div className="instructorDashboard">
       <nav className="instructorDashboardNavbar">
         <div className="instructorDashboardNavbar-brand">
           {/* <span className="instructorDashboardSpan">Exam Portal</span> */}
-          <span className="instructorDashboardSpan">instructor dashboard</span>
+          <span className="instructorDashboardSpan">instructor Dashboard</span>
         </div>
-        <ul className="navbar-links">
+        <ul className="instructorDashboardNav">
           <li>
-            <Link to="/add-exam">
-              <button className="instructorDashboardButton">Create exam</button>
-            </Link>
+            <Link to="/instructor-profile">Profile</Link>
           </li>
         </ul>
       </nav>
 
       <div className="instructorDashboardBody">
-        <h1 className="instructorDashboardHead1">Create exams</h1>
+        <h1 className="instructorDashboardHead1">Create exams here....</h1>
+        <div className="instructorDashboardBodyButtons">
+          <Link to="/show-exams">
+            <button className="instructorDashboardButton2">Show exams</button>
+          </Link>
+          <Link to="/add-exam">
+            <button className="instructorDashboardButton2">Create exam</button>
+          </Link>
+        </div>
+        <div className="instructorDashboardImgDiv">
+          <img src={instructor_dashboard} alt="instructorDashboardImg" />
+        </div>
       </div>
       {/* <p>Here is an overview of your activities.</p> */}
     </div>
   );
 }
-
-// export default Dashboard;

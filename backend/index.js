@@ -23,6 +23,13 @@ app.use(express.json({ limit: "2mb" }));
 
 app.use("/api", router);
 
+
+// const userRoutes = require("./routes/auth"); // Adjust path as needed
+import userRoutes from "./routes/routers.js"
+app.use("/api", userRoutes);
+// 
+
+
 app.get("/api/user", async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];

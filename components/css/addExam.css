@@ -65,4 +65,5 @@ form button:hover {
 .addExamButtons {
   display: flex;
   gap: 1rem;
+  padding-top: 1rem;
 }

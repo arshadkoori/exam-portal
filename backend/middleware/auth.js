@@ -2,90 +2,75 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Middleware to verify the token
-// export function authenticateToken(req, res, next) {
-//   const authHeader = req.headers["authorization"];
-//   const token = authHeader && authHeader.split(" ")[1];
-
-//   if (!token) {
-//     return res.status(401).json({ msg: "Access denied. No token provided." });
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     req.user = decoded; // Attach decoded token info to request
-//     next(); // Continue to the next middleware or route handler
-//   } catch (err) {
-//     console.error("Token verification failed:", err);
-//     return res.status(403).json({ msg: "Invalid or expired token." });
-//   }
-// }
-
-
-// const jwt = require("jsonwebtoken");
-
-export function authenticateToken  (req, res, next)  {
-  const token = req.header("Authorization")?.split(" ")[1]; // Get the token
+export function authenticateToken(req, res, next) {
+  const token = req.headers["authorization"]?.split(" ")[1]; // Extract token from Bearer header
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res
+      .status(401)
+      .json({ message: "Authentication token is required" });
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user ID or data to the request
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid or expired token" });
+    }
+    req.user = user; // Attach user info to the request
     next();
-  } catch (error) {
-    res.status(401).json({ msg: "Invalid token" });
-  }
-};
-
-// module.exports = authenticateToken;
-
-
-
-// Middleware to check if user is authenticated (example for specific roles if needed)
-export function isAuthenticated(req, res, next) {
-  if (!req.user) {
-    return res.status(401).json({ msg: "Authentication required." });
-  }
-  next();
+  });
 }
 
-// Middleware for role-based authorization (optional)
-export function authorizeRoles(...roles) {
+export function authorizeRoles(role) {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+    if (!req.user || req.user.role !== role) {
       return res
         .status(403)
-        .json({ msg: "Access forbidden: insufficient privileges." });
+        .json({ message: "Access forbidden: insufficient role privileges" });
     }
     next();
   };
 }
 
+// 
+// auth
+// import jwt from "jsonwebtoken";
 
-// import { Navigate, Outlet } from "react-router-dom";
+const { verify } = jwt;
 
-// export default function Auth() {
-//   const token = localStorage.getItem("token");
+export default async function auth(req, res, next) {
+    try {
+        let token = req.headers.authorization.split(" ")[1];
+        let details = await verify(token, process.env.JWT_SECRET);
+        if(details) {
+            req.user = details;
+            next();
+            return;
+        }
+        return res.status(403).json({ msg: "Forbidden"});
+    } catch (error) {
+        console.log(error);
+        return res.status(403).json({ msg: "Forbidden"});
+    }
+}
+// 
 
-//   if (token) {
-//     return (
-//       <>
-//         <Outlet />
-//       </>
-//     );
-//   }
+// backend/middleware/auth.js
 
-//   return <Navigate to="/dashboard" replace={true} />;
-// }
+// const jwt = require('jsonwebtoken');
 
-// import { Navigate, Outlet } from 'react-router-dom';
+export const verifyToken = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
 
-// const Auth = () => {
-//   const token = localStorage.getItem('token');
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
 
-//   return token ? <Outlet /> : <Navigate to="/dashboard" replace />;
-// };
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // Attach the user data to the request
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+};
 
-// export default Auth;
+// module.exports = { verifyToken };

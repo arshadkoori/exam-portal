@@ -1,0 +1,97 @@
+.instructorProfileMain {
+  /* display: flex;
+    flex-direction: column; */
+}
+
+.instructorProfileMainNav {
+  /* display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem; */
+
+  height: 4rem;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instructorProfileMainNavLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.instructorProfileMainButton {
+  border: none;
+  height: 2rem;
+  width: 5rem;
+  border-radius: 0.5rem;
+  color: white;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.instructorProfileSpan {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.instructorProfileData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 90vh; */
+  padding-top: 4rem;
+}
+
+.instructorProfileImg {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+/* .examDetails {
+    margin-top: 20px;
+  } */
+
+/* .examTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .examTable th,
+  .examTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .examTable th {
+    background-color: #f4f4f4;
+  } */
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}

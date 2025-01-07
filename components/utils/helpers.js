@@ -34,6 +34,10 @@
 
 // export default Auth;
 
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:3000";
+
 export async function getUsers() {
   try {
     const res = await axios.get("/api/get-users");
@@ -62,3 +66,19 @@ const handleSubmit = async (e) => {
     toast.error(error.response.data.msg);
   }
 };
+
+// Profile
+export async function profile() {
+  try {
+    let token = localStorage.getItem("token");
+    let res = await axios.get("/api/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return Promise.resolve(res.data);
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error.response.data);
+  }
+}

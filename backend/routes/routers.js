@@ -1,14 +1,21 @@
 import { Router } from "express";
 import * as user from "../requesthandlers/user.handler.js";
+import { authenticateToken, authorizeRoles } from "../middleware/auth.js";
+
+import { createExam, saveMarks, getStudentExams } from "../requesthandlers/exam.handler.js";
+
+import { verifyToken } from "../middleware/auth.js";
+
+import auth from "../middleware/auth.js";
+
 import {
-  authenticateToken,
-  isAuthenticated,
-  authorizeRoles,
-} from "../middleware/auth.js";
+  getExams,
+  getExamTitles,
+  getExamQuestions,
+} from "../requesthandlers/exam.handler.js";
 
-import { createExam } from "../requesthandlers/exam.handler.js";
+import User from "../models/user.model.js";
 
-import { getExams, getExamTitles, getExamQuestions } from "../requesthandlers/exam.handler.js";
 
 const router = Router();
 
@@ -16,18 +23,39 @@ router.route("/register").post(user.register);
 router.route("/login").post(user.login);
 router.route("/request-password-reset").post(user.requestPasswordReset);
 router.route("/change-password").post(user.changePassword);
+router.route("/profile").get(auth, user.profile);
 
 router.post("/api/exam", createExam);
 router.get("/api/exam/titles", getExamTitles);
 router.get("/api/exam/:id", getExamQuestions);
 router.get("/api/exam", getExams);
 
-// Example protected route
-router
-  .route("/protected")
-  .get(authenticateToken, isAuthenticated, (req, res) => {
-    res.status(200).json({ msg: "This is a protected route", user: req.user });
-  });
+// Define the route to get marks
+// router.get('/api/exam', verifyToken, getMarks);
+router.get("/student/exams", getStudentExams);
+
+// Route to save the student's exam marks
+router.post("/saveMarks", saveMarks);
+
+// Example protected route for students
+router.get(
+  "/student-dashboard",
+  authenticateToken,
+  authorizeRoles("student"),
+  (req, res) => {
+    res.json({ message: "Welcome to the student dashboard!" });
+  }
+);
+
+// Example protected route for instructors
+router.get(
+  "/instructor-dashboard",
+  authenticateToken,
+  authorizeRoles("instructor"),
+  (req, res) => {
+    res.json({ message: "Welcome to the instructor dashboard!" });
+  }
+);
 
 // Example role-based protected route
 router
@@ -49,5 +77,65 @@ router.get("/api/user", authenticateToken, async (req, res) => {
     res.status(500).json({ msg: "Server Error" });
   }
 });
+
+//
+
+import Exam from "../models/exam.model.js";
+import authMiddleware from "../middleware/auth.js";
+
+router.post("/", authMiddleware, async (req, res) => {
+  console.log(req.body); // Log the request payload
+  const { examTitle, questions, instructorId } = req.body;
+
+  if (!examTitle || !questions || !instructorId) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  // Remaining logic...
+  // });
+
+  try {
+    const newExam = new Exam({
+      title: examTitle,
+      questions,
+      instructor: instructorId,
+    });
+
+    await newExam.save();
+    res.status(201).json({ message: "Exam created successfully!" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Server error." });
+  }
+});
+
+// Middleware to authenticate token
+const tokenAuthentication = (req, res, next) => {
+  const token = req.header("Authorization")?.split(" ")[1];
+  if (!token) return res.status(401).json({ msg: "Access denied" });
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified; // Extract user data from token
+    next();
+  } catch (err) {
+    res.status(400).json({ msg: "Invalid token" });
+  }
+};
+
+// Route to get logged-in user details
+router.get("/me", tokenAuthentication, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id, "-password"); // Exclude password
+    if (!user) return res.status(404).json({ msg: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// module.exports = router;
+//
 
 export default router;

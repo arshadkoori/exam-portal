@@ -56,68 +56,6 @@ export async function register(req, res) {
   }
 }
 
-// Login
-// export async function login(req, res) {
-//   try {
-//     const { username, password, role } = req.body;
-
-//     // Validate inputs
-//     if (!username || !password || !role) {
-//       return res.status(400).json({ msg: "All fields are required" });
-//     }
-
-//     // Find user by username and role
-//     const user = await userModel.findOne({ username, role });
-//     if (!user) {
-//       return res.status(400).json({ msg: "Invalid credentials" });
-//     }
-
-//     // Validate password
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({ msg: "Invalid credentials" });
-//     }
-
-//     // Generate JWT token
-//     const token = jwt.sign(
-//       { id: user._id, role: user.role },
-//       process.env.JWT_SECRET,
-//       { expiresIn: "1h" }
-//     );
-
-//     return res.status(200).json({ msg: "Login successful", token });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ msg: "Failed to login" });
-//   }
-// }
-
-// export async function register(req, res) {
-//   try {
-//     const { username, email, password, role } = req.body;
-
-//     // Validate inputs
-//     if (!username || username.length < 2 || !email || email.length < 4 || !password || password.length < 4 || !role) {
-//       return res.status(400).json({ msg: "Invalid inputs" });
-//     }
-
-//     // Check for existing user
-//     const userExist = await userModel.findOne({ $or: [{ username }, { email }] });
-//     if (userExist) {
-//       return res.status(400).json({ msg: "Username or email already exists" });
-//     }
-
-//     // Hash password and create user
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     await userModel.create({ username, email, password: hashedPassword, role });
-//     return res.status(201).json({ msg: "Registration successful" });
-
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ msg: "Failed to register" });
-//   }
-// }
-
 // // Login
 export async function login(req, res) {
     try {
@@ -135,7 +73,7 @@ export async function login(req, res) {
         }
 
         // Generate JWT
-        const token = sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: "24h" });
+        const token = sign({ userId: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
         return res.status(200).json({ token });
 
     } catch (error) {
@@ -201,5 +139,20 @@ export async function changePassword(req, res) {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: "Failed to change password" });
+  }
+}
+
+
+// profile
+export async function profile(req, res) {
+  try {
+    let result = await userModel.findOne(
+      { _id: req.user.userId },
+      { password: 0 }
+    );
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Failed to fetch" });
   }
 }
