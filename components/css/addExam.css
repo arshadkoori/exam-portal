@@ -67,3 +67,141 @@ form button:hover {
   gap: 1rem;
   padding-top: 1rem;
 }
+
+/* Styling for the container */
+.addExamContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Form title */
+.addExamContainer h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Style question containers */
+.questionContainer {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #fdfdfd;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+.addExamFormLabel {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Input focus effects */
+form input[type="text"]:focus,
+form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Add hover effect for buttons */
+.addExamButtonsAdd:hover,
+.addExamButtonsSubmit:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Option styling */
+.answerContainer input {
+  display: block;
+  margin-bottom: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: calc(100% - 20px);
+}
+
+/* Styling for select dropdown */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+/* Add slight shadow effect */
+form button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the question title */
+.questionContainer label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Transition effect for all inputs */
+form input[type="text"],
+form select {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add a footer style for buttons */
+.addExamButtons {
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+/* Add a subtle gradient background */
+.addExamForm {
+  background: linear-gradient(135deg, #f5f7fa, #e4e8ee);
+}
+
+/* Placeholder styling */
+form input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Add hover effect to question container */
+.questionContainer:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+  .addExamForm {
+    padding: 15px;
+    margin: 10px 0;
+  }
+
+  form input[type="text"] {
+    padding: 8px;
+  }
+
+  form button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .addExamButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
