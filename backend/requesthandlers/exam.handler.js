@@ -6,10 +6,8 @@ export const createExam = async (req, res) => {
   try {
     const { examTitle, questions, instructorId, instructorName } = req.body;
 
-    // Log request body
     console.log("Request Body:", req.body);
 
-    // Validate input fields
     if (
       !examTitle ||
       !questions ||
@@ -20,7 +18,6 @@ export const createExam = async (req, res) => {
       return res.status(400).json({ message: "Invalid request data" });
     }
 
-    // Save each question to the database and get their IDs
     const questionDocs = await Promise.all(
       questions.map(async (q) => {
         const newQuestion = new Question(q);
@@ -29,7 +26,7 @@ export const createExam = async (req, res) => {
       })
     );
 
-    // Create a new exam document and save it
+
     const newExam = new Exam({
       examTitle,
       questions: questionDocs,
@@ -38,7 +35,7 @@ export const createExam = async (req, res) => {
     });
     await newExam.save();
 
-    // Respond with success message
+
     res.status(201).json({ message: "Exam created successfully" });
   } catch (error) {
     console.error("Error creating exam:", error); // Log the error for debugging
@@ -48,7 +45,6 @@ export const createExam = async (req, res) => {
   }
 };
 
-// Get the exam
 export const getExams = async (req, res) => {
   try {
     const exams = await Exam.find().populate("questions");
@@ -59,7 +55,7 @@ export const getExams = async (req, res) => {
   }
 };
 
-// Fetch all exam titles
+
 export const getExamTitles = async (req, res) => {
   try {
     const exams = await Exam.find().select("examTitle");
@@ -70,7 +66,7 @@ export const getExamTitles = async (req, res) => {
   }
 };
 
-// Fetch questions for a specific exam
+
 export const getExamQuestions = async (req, res) => {
   const { id } = req.params;
 
@@ -94,7 +90,6 @@ export const saveMarks = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields." });
     }
 
-    // Fetch the exam details using the examId
     const exam = await Exam.findById(examId);
     if (!exam) {
       return res.status(404).json({ message: "Exam not found." });
@@ -104,7 +99,7 @@ export const saveMarks = async (req, res) => {
       studentId,
       studentName,
       examId,
-      examName: exam.examTitle, // Save the exam title as examName
+      examName: exam.examTitle,
       score,
     });
 
@@ -118,72 +113,9 @@ export const saveMarks = async (req, res) => {
   }
 };
 
-// export const showMarks = async (req, res) => {
-//   try {
-//     const studentId = req.user.id; // Assuming the student ID is available in the token
-//     const student = await Student.findById(studentId);
-
-//     if (!student) {
-//       return res.status(404).json({ msg: "Student not found" });
-//     }
-
-//     // Assuming marks are stored in an array of objects in the student model
-//     const marks = student.marks;
-//     res.json(marks);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
-// Fetch student marks
-// export const getMarks = async (req, res) => {
-//   try {
-//     const studentId = req.user.id; // Assuming the student ID is available in the token
-//     const student = await Student.findById(studentId);
-
-//     if (!student) {
-//       return res.status(404).json({ msg: "Student not found" });
-//     }
-
-//     console.log("Fetched student marks:", student.marks); // Debug log
-//     res.json(student.marks); // Ensure marks are returned as an array
-//   } catch (err) {
-//     console.error("Error fetching marks:", err); // Debug log
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
-// const Student = require("../models/Student");
-
-// export const getStudentExams = async (req, res) => {
-//   try {
-//     const studentId = req.user.id; // Assuming `id` is set in `req.user` after authentication
-//     const student = await Student.findById(studentId);
-
-//     if (!student) {
-//       return res.status(404).json({ msg: "Student not found" });
-//     }
-
-//     const exams = student.marks.map((exam) => ({
-//       examName: exam.name,
-//       marks: [
-//         { subjectName: "Subject 1", mark: exam.subject1 },
-//         { subjectName: "Subject 2", mark: exam.subject2 },
-//         { subjectName: "Subject 3", mark: exam.subject3 },
-//       ],
-//     }));
-
-//     res.json(exams);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
 export const getStudentExams = async (req, res) => {
   try {
-    const studentId = req.user.id; // Assuming user ID is set in `req.user` by middleware
+    const studentId = req.user.id;
     console.log("Fetching exams for student ID:", studentId);
 
     const student = await Student.findById(studentId);
@@ -212,6 +144,4 @@ export const getStudentExams = async (req, res) => {
   }
 };
 
-
-// module.exports = { getStudentExams };
 

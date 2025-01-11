@@ -21,12 +21,6 @@ import ExamTitles from "../components/examTitles";
 import ExamQuestions from "../components/examQuestions";
 import ProtectedRoute from "../components/protectedRoute";
 
-// import Auth from "../components/utils/auth";
-// import authorizeRole from "../components/utils/auth"
-
-// import Auth from "../backend/middleware/auth";
-// import AccountDetails from "../components/accountDetails";
-
 import "./App.css";
 
 if (import.meta.env.DEV) {
@@ -43,14 +37,6 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/student-profile" element={<StudentProfile />} /> */}
-
-        {/* <Route path="/student-dashboard" element={<StudentDashboard />} />
-        <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-        <Route path="/Add-exam" element={<AddExam />} />
-        <Route path="/show-exams" element={<ShowExams />} />
-        <Route path="/exams" element={<ExamTitles />} />
-        <Route path="/exam/:id" element={<ExamQuestions />} /> */}
 
         {/* Student Protected Routes */}
         <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
@@ -58,6 +44,7 @@ function App() {
           <Route path="/exams" element={<ExamTitles />} />
           <Route path="/exam/:id" element={<ExamQuestions />} />
           <Route path="/student-profile" element={<StudentProfile />} />
+          {/* <Route path="/show-marks" element={<ShowMarks />} /> */}
         </Route>
 
         {/* Instructor Protected Routes */}

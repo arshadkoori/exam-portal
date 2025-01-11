@@ -14,7 +14,7 @@ const studentMarksSchema = new mongoose.Schema(
       ref: "Exam",
       required: true,
     },
-    examName: { type: String, required: true }, // Added exam name
+    examName: { type: String, required: true },
     score: { type: Number, required: true },
   },
   { timestamps: true }

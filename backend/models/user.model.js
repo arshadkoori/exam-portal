@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["student", "instructor"],
-    required: true, // Make role required
+    required: true,
   },
   image: {
     type: String,

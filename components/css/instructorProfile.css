@@ -55,26 +55,6 @@
   border-radius: 50%;
 }
 
-/* .examDetails {
-    margin-top: 20px;
-  } */
-
-/* .examTable {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .examTable th,
-  .examTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .examTable th {
-    background-color: #f4f4f4;
-  } */
-
 table {
   width: 50%;
   border-collapse: collapse;

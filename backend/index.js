@@ -24,10 +24,9 @@ app.use(express.json({ limit: "5mb" }));
 app.use("/api", router);
 
 
-// const userRoutes = require("./routes/auth"); // Adjust path as needed
 import userRoutes from "./routes/routers.js"
 app.use("/api", userRoutes);
-// 
+
 
 
 app.get("/api/user", async (req, res) => {
@@ -44,10 +43,9 @@ app.get("/api/user", async (req, res) => {
 
 import { authenticateToken } from "./middleware/auth.js";
 
-// Route to get logged-in user's details
 router.get("/api/user", authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password"); // Find user by ID, exclude password
+    const user = await User.findById(req.user.id).select("-password");
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }

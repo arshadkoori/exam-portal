@@ -41,6 +41,10 @@ export default function StudentProfile() {
 
   if (!user) return <p>No user data available.</p>;
 
+  //
+  // 
+  //
+
   return (
     <div className="studentProfileMain">
       <div className="studentProfileMainNav">
@@ -58,16 +62,6 @@ export default function StudentProfile() {
       </div>
 
       <div className="studentProfileData">
-        {/* <p>
-          <strong>Username:</strong> {user.username}
-        </p>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Role:</strong> {user.role}
-        </p> */}
-
         <table>
           <tbody>
             <tr>
@@ -84,14 +78,6 @@ export default function StudentProfile() {
             </tr>
           </tbody>
         </table>
-      </div>
-      <div className="studentProfileTable">
-        {/* <table>
-          <td>
-            <th>hai</th>
-            <th>hello</th>
-          </td>
-        </table> */}
       </div>
     </div>
   );

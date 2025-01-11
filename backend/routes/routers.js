@@ -30,14 +30,12 @@ router.get("/api/exam/titles", getExamTitles);
 router.get("/api/exam/:id", getExamQuestions);
 router.get("/api/exam", getExams);
 
-// Define the route to get marks
-// router.get('/api/exam', verifyToken, getMarks);
+
 router.get("/student/exams", getStudentExams);
 
-// Route to save the student's exam marks
+
 router.post("/saveMarks", saveMarks);
 
-// Example protected route for students
 router.get(
   "/student-dashboard",
   authenticateToken,
@@ -47,7 +45,6 @@ router.get(
   }
 );
 
-// Example protected route for instructors
 router.get(
   "/instructor-dashboard",
   authenticateToken,
@@ -78,7 +75,7 @@ router.get("/api/user", authenticateToken, async (req, res) => {
   }
 });
 
-//
+
 
 import Exam from "../models/exam.model.js";
 import authMiddleware from "../middleware/auth.js";
@@ -91,8 +88,7 @@ router.post("/", authMiddleware, async (req, res) => {
     return res.status(400).json({ message: "All fields are required." });
   }
 
-  // Remaining logic...
-  // });
+
 
   try {
     const newExam = new Exam({
@@ -135,7 +131,5 @@ router.get("/me", tokenAuthentication, async (req, res) => {
   }
 });
 
-// module.exports = router;
-//
 
 export default router;
