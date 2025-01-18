@@ -3,40 +3,50 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./css/examQuestions.css";
+import toast from "react-hot-toast";
 
 const ExamQuestions = () => {
   const { id } = useParams();
   const [exam, setExam] = useState(null);
-  const [timer, setTimer] = useState(900); // 15 minutes in seconds
+  const [timer, setTimer] = useState(900);
   const [isExamStarted, setIsExamStarted] = useState(false);
   const [isExamFinished, setIsExamFinished] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const studentId = localStorage.getItem("Student_ID");
   const studentName = localStorage.getItem("Student_Name");
 
   useEffect(() => {
-    const fetchExamQuestions = async () => {
-      try {
-        const response = await axios.get(`/api/exam/${id}`);
-        setExam(response.data);
-      } catch (error) {
-        console.error("Error fetching exam questions:", error);
-      }
-    };
-
-    fetchExamQuestions();
-
     return () => {
-      if (intervalId) clearInterval(intervalId); // Clean up interval on component unmount
+      if (intervalId) clearInterval(intervalId);
     };
-  }, [id, intervalId]);
+  }, [intervalId]);
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const handlePasswordSubmit = async () => {
+    try {
+      const response = await axios.get(`/api/exam/${id}`, {
+        params: { password: passwordInput },
+      });
+
+      setExam(response.data);
+      setIsPasswordVerified(true);
+      toast.success("success")
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        toast.error("Invalid password. Please try again.");
+      } else {
+        console.error("Error verifying password:", error);
+      }
+    }
   };
 
   const handleAnswerChange = (questionIndex, selectedOption) => {
@@ -48,8 +58,7 @@ const ExamQuestions = () => {
   };
 
   const handleSubmit = async () => {
-    // Stop the timer when exam is submitted
-    clearInterval(intervalId);
+    clearInterval(intervalId); // Stop the timer when the exam is submitted
     let totalScore = 0;
 
     exam.questions.forEach((question, index) => {
@@ -61,13 +70,12 @@ const ExamQuestions = () => {
     setScore(totalScore);
     setIsExamFinished(true); // Show the results after submission
 
-    // Save student's score to the database
+    // Save the student's score to the database
     try {
       await axios.post("/api/saveMarks", {
         studentId,
         studentName,
         examId: id,
-        
         score: totalScore,
       });
     } catch (error) {
@@ -78,18 +86,40 @@ const ExamQuestions = () => {
   const startExam = () => {
     setIsExamStarted(true);
 
-    // Start the timer countdown logic
     const newIntervalId = setInterval(() => {
-      if (timer > 0) {
-        setTimer((prevTimer) => prevTimer - 1);
-      } else {
-        clearInterval(newIntervalId); // Clear the interval when time is up
-        setIsExamFinished(true);
-      }
-    }, 1000); // Interval should decrement every second
+      setTimer((prevTimer) => {
+        if (prevTimer <= 1) {
+          clearInterval(newIntervalId);
+          setIsExamFinished(true); // End the exam when the timer reaches 0
+          return 0;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
 
-    setIntervalId(newIntervalId); // Store interval ID for cleanup
+    setIntervalId(newIntervalId);
   };
+
+  if (!isPasswordVerified) {
+    return (
+      <div className="password-section">
+        <h3>Enter Exam Password</h3>
+        <input
+          type="passowrd"
+          className="password-input"
+          value={passwordInput}
+          onChange={(e) => setPasswordInput(e.target.value)}
+          placeholder="Enter 10-digit password"
+        />
+        <button
+          onClick={handlePasswordSubmit}
+          className="password-submit-button"
+        >
+          Verify Password
+        </button>
+      </div>
+    );
+  }
 
   if (!exam) {
     return <p>Loading questions...</p>;

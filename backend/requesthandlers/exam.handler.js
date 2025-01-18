@@ -4,12 +4,14 @@ import StudentMarks from "../models/students.mark.model.js"; // Model to store m
 
 export const createExam = async (req, res) => {
   try {
-    const { examTitle, questions, instructorId, instructorName } = req.body;
+    const { examTitle, examPassword, questions, instructorId, instructorName } =
+      req.body;
 
     console.log("Request Body:", req.body);
 
     if (
       !examTitle ||
+      !examPassword ||
       !questions ||
       !instructorId ||
       !instructorName ||
@@ -26,15 +28,25 @@ export const createExam = async (req, res) => {
       })
     );
 
+    //
+
+    const passwordRegex = /^\d{10}$/; // Regex to validate 10 numeric digits
+    if (!passwordRegex.test(examPassword)) {
+      return res
+        .status(400)
+        .json({ message: "Exam password must be exactly 10 numeric digits." });
+    }
+
+    //
 
     const newExam = new Exam({
       examTitle,
+      password: examPassword,
       questions: questionDocs,
       instructorId,
       instructorName,
     });
     await newExam.save();
-
 
     res.status(201).json({ message: "Exam created successfully" });
   } catch (error) {
@@ -55,7 +67,6 @@ export const getExams = async (req, res) => {
   }
 };
 
-
 export const getExamTitles = async (req, res) => {
   try {
     const exams = await Exam.find().select("examTitle");
@@ -66,15 +77,36 @@ export const getExamTitles = async (req, res) => {
   }
 };
 
+// export const getExamQuestions = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const exam = await Exam.findById(id).populate("questions");
+//     if (!exam) {
+//       return res.status(404).json({ message: "Exam not found" });
+//     }
+//     res.status(200).json(exam);
+//   } catch (error) {
+//     console.error("Error fetching exam questions:", error);
+//     res.status(500).json({ message: "Error fetching exam questions" });
+//   }
+// };
 
 export const getExamQuestions = async (req, res) => {
   const { id } = req.params;
+  const { password } = req.query; // Expect the password to be sent as a query parameter
 
   try {
     const exam = await Exam.findById(id).populate("questions");
     if (!exam) {
       return res.status(404).json({ message: "Exam not found" });
     }
+
+    // Check if the provided password matches the exam's password
+    if (exam.password !== password) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
     res.status(200).json(exam);
   } catch (error) {
     console.error("Error fetching exam questions:", error);
@@ -143,5 +175,3 @@ export const getStudentExams = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
-
-

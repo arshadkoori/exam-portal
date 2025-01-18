@@ -1,4 +1,76 @@
-/* General styles for the exam container */
+.password-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 15%;
+}
+
+.password-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.password-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.password-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.password-error {
+  color: #ff0000;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.password-submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  text-align: center;
+  outline: none;
+}
+
+.password-submit-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+.password-helper {
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .exam-questions-container {
   padding: 20px;
   background-color: #f4f6f9;
@@ -7,14 +79,7 @@
   color: #333;
 }
 
-/* Exam title styling */
 .exam-title-head {
-  /* width: 100%;
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #333; */
-
   background-color: #ffffff;
   padding: 20px;
   width: 100%;
@@ -37,7 +102,6 @@
   border-color: #2e89c6;
 }
 
-/* Start Exam Button */
 .start-exam-button-container {
   text-align: center;
   margin-top: 30px;
@@ -58,7 +122,6 @@
   background-color: #0056b3;
 }
 
-/* Timer Styling */
 .timer-container {
   text-align: right;
   font-size: 1.2rem;
@@ -67,7 +130,6 @@
   margin-bottom: 20px;
 }
 
-/* Each question container styling */
 .question-container {
   background-color: #ffffff;
   padding: 20px;
@@ -76,7 +138,6 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Options list styling */
 .options-list {
   list-style-type: none;
   padding-left: 0;
@@ -91,20 +152,17 @@
   cursor: pointer;
 }
 
-/* Hover effect for options */
 .option-item:hover {
   background-color: #007bff;
   color: #fff;
 }
 
-/* Answer selection highlight */
 .option-item.selected {
-  background-color: #28a745; /* Green for selected answer */
-  color: white; /* Ensure text is visible on selected option */
-  border: 2px solid #1e7e34; /* Darker green border */
+  background-color: #28a745;
+  color: white;
+  border: 2px solid #1e7e34;
 }
 
-/* Correct answer display when exam is finished */
 .correct-answer {
   margin-top: 10px;
   background-color: #d4edda;
@@ -113,7 +171,6 @@
   font-weight: bold;
 }
 
-/* Exam finished message */
 .exam-finished-message {
   text-align: center;
   font-size: 1.2rem;
@@ -122,7 +179,6 @@
   margin-top: 30px;
 }
 
-/* Submit Button */
 .submit-button-container {
   text-align: center;
   margin-top: 30px;
@@ -143,7 +199,6 @@
   background-color: #218838;
 }
 
-/* Exam result display */
 .exam-results {
   margin-top: 30px;
   padding: 20px;
@@ -161,4 +216,20 @@
 
 .exam-result-item p {
   margin: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .password-section {
+    padding: 15px;
+  }
+
+  .password-input {
+    padding: 10px 12px;
+  }
+
+  .password-submit-button {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+  }
 }
