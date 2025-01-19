@@ -29,22 +29,18 @@ export default function StudentProfile() {
   useEffect(() => {
     profile()
       .then((userData) => {
-        setUser(userData); // Update the user state with the fetched data
-        setLoading(false); // Set loading to false after data is fetched
+        setUser(userData);
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(error.msg || "Failed to fetch user profile.");
-        setLoading(false); // Set loading to false even if there's an error
+        setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Loading...</p>;
 
   if (!user) return <p>No user data available.</p>;
-
-  //
-  //
-  //
 
   return (
     <div className="studentProfileMain">
