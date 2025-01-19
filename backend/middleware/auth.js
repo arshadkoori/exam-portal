@@ -14,7 +14,7 @@ export function authenticateToken(req, res, next) {
     if (err) {
       return res.status(403).json({ message: "Invalid or expired token" });
     }
-    req.user = user; // Attach user info to the request
+    req.user = user;
     next();
   });
 }
@@ -29,10 +29,6 @@ export function authorizeRoles(role) {
     next();
   };
 }
-
-// 
-// auth
-// import jwt from "jsonwebtoken";
 
 const { verify } = jwt;
 
@@ -51,11 +47,6 @@ export default async function auth(req, res, next) {
         return res.status(403).json({ msg: "Forbidden"});
     }
 }
-// 
-
-// backend/middleware/auth.js
-
-// const jwt = require('jsonwebtoken');
 
 export const verifyToken = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -66,11 +57,9 @@ export const verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach the user data to the request
+    req.user = decoded;
     next();
   } catch (err) {
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };
-
-// module.exports = { verifyToken };

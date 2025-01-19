@@ -2,7 +2,13 @@ import { Router } from "express";
 import * as user from "../requesthandlers/user.handler.js";
 import { authenticateToken, authorizeRoles } from "../middleware/auth.js";
 
-import { createExam, saveMarks, getStudentExams } from "../requesthandlers/exam.handler.js";
+import {
+  createExam,
+  saveMarks,
+  getStudentExams,
+  updateQuestion,
+  deleteExam,
+} from "../requesthandlers/exam.handler.js";
 
 import { verifyToken } from "../middleware/auth.js";
 
@@ -15,7 +21,6 @@ import {
 } from "../requesthandlers/exam.handler.js";
 
 import User from "../models/user.model.js";
-
 
 const router = Router();
 
@@ -30,12 +35,16 @@ router.get("/api/exam/titles", getExamTitles);
 router.get("/api/exam/:id", getExamQuestions);
 router.get("/api/exam", getExams);
 
-
+// get exams
 router.get("/student/exams", getStudentExams);
 
+// edit exam
+router.put("/api/exam/:examId/questions/:questionId", updateQuestion);
+
+// DELETE: Delete an exam by its ID
+router.delete('/exam/:examId', deleteExam);
 
 router.post("/saveMarks", saveMarks);
-
 router.get(
   "/student-dashboard",
   authenticateToken,
@@ -75,8 +84,6 @@ router.get("/api/user", authenticateToken, async (req, res) => {
   }
 });
 
-
-
 import Exam from "../models/exam.model.js";
 import authMiddleware from "../middleware/auth.js";
 
@@ -87,8 +94,6 @@ router.post("/", authMiddleware, async (req, res) => {
   if (!examTitle || !questions || !instructorId) {
     return res.status(400).json({ message: "All fields are required." });
   }
-
-
 
   try {
     const newExam = new Exam({
@@ -130,6 +135,5 @@ router.get("/me", tokenAuthentication, async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
-
 
 export default router;

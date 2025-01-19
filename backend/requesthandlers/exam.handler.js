@@ -57,15 +57,34 @@ export const createExam = async (req, res) => {
   }
 };
 
+// export const getExams = async (req, res) => {
+//   try {
+//     const exams = await Exam.find().populate("questions");
+//     res.status(200).json(exams);
+//   } catch (error) {
+//     console.error("Error fetching exams:", error);
+//     res.status(500).json({ message: "Error fetching exams" });
+//   }
+// };
+
 export const getExams = async (req, res) => {
+  const { instructorId } = req.query;
+
   try {
-    const exams = await Exam.find().populate("questions");
+    const exams = await Exam.find({ instructorId }).populate("questions");
+
+    if (!Array.isArray(exams)) {
+      return res.status(200).json([]); // Ensure an array is returned
+    }
+
     res.status(200).json(exams);
   } catch (error) {
     console.error("Error fetching exams:", error);
     res.status(500).json({ message: "Error fetching exams" });
   }
 };
+
+
 
 export const getExamTitles = async (req, res) => {
   try {
@@ -76,21 +95,6 @@ export const getExamTitles = async (req, res) => {
     res.status(500).json({ message: "Error fetching exam titles" });
   }
 };
-
-// export const getExamQuestions = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const exam = await Exam.findById(id).populate("questions");
-//     if (!exam) {
-//       return res.status(404).json({ message: "Exam not found" });
-//     }
-//     res.status(200).json(exam);
-//   } catch (error) {
-//     console.error("Error fetching exam questions:", error);
-//     res.status(500).json({ message: "Error fetching exam questions" });
-//   }
-// };
 
 export const getExamQuestions = async (req, res) => {
   const { id } = req.params;
@@ -173,5 +177,51 @@ export const getStudentExams = async (req, res) => {
   } catch (err) {
     console.error("Error in getStudentExams:", err);
     res.status(500).json({ msg: "Server error" });
+  }
+};
+
+export const updateQuestion = async (req, res) => {
+  const { questionId } = req.params;
+  const { questionText, options, correctAnswer } = req.body;
+
+  try {
+    const updatedQuestion = await Question.findByIdAndUpdate(
+      questionId,
+      { questionText, options, correctAnswer },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedQuestion) {
+      return res.status(404).json({ message: "Question not found" });
+    }
+
+    res.status(200).json(updatedQuestion);
+  } catch (error) {
+    console.error("Error updating question:", error);
+    res.status(500).json({ message: "Error updating question" });
+  }
+};
+
+// Delete exam and its associated questions
+export const deleteExam = async (req, res) => {
+  const { examId } = req.params;
+
+  try {
+    // Find and delete all questions associated with the exam
+    const exam = await Exam.findById(examId).populate('questions');
+    if (!exam) {
+      return res.status(404).json({ message: "Exam not found" });
+    }
+
+    // Delete questions from the Question model
+    await Question.deleteMany({ _id: { $in: exam.questions } });
+
+    // Delete the exam
+    await Exam.findByIdAndDelete(examId);
+
+    return res.status(200).json({ message: "Exam and its questions deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting exam:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

@@ -5,6 +5,7 @@
   text-align: center;
   padding: 20px;
 }
+
 .showExamsBody {
   font-family: "Arial", sans-serif;
   margin: 20px auto;
@@ -57,9 +58,9 @@
 }
 
 .exam-container h5 {
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #777;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
 }
 
 .question-container {
@@ -96,4 +97,124 @@
   text-align: center;
   font-size: 1rem;
   color: #999;
+}
+
+.delete-button-div {
+  position: relative;
+  height: 10vh;
+}
+
+.exam-container {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exam-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.delete-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #0073e6;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+
+.edit-button {
+  height: 2rem;
+  width: 8rem;
+  border: 1px solid #0073e6;
+  background-color: #0073e6;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.edit-button:hover, .delete-button:hover {
+  background-color: #0f5faf;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal {
+    padding-inline: 1rem;
+  }
 }

@@ -17,4 +17,3 @@ const examSchema = new mongoose.Schema(
 const Exam = mongoose.model('Exam', examSchema);
 
 export default Exam;
-

@@ -26,7 +26,7 @@ export default function InstructorDashboard() {
         <h1 className="instructorDashboardHead1">Create exams here....</h1>
         <div className="instructorDashboardBodyButtons">
           <Link to="/show-exams">
-            <button className="instructorDashboardButton2">Show exams</button>
+            <button className="instructorDashboardButton2">Show created exams</button>
           </Link>
           <Link to="/add-exam">
             <button className="instructorDashboardButton2">Create exam</button>

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function StudentProfile() {
-  const [user, setUser] = useState(null); // User state to store the fetched user data
-  const [loading, setLoading] = useState(true); // Loading state to handle loading logic
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [exam, setExam] = useState(null);
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function StudentProfile() {
     localStorage.removeItem("Role");
     localStorage.removeItem("instructor");
     navigate("/", { replace: true });
-    window.location.reload(); // Reload to reset state
+    window.location.reload();
   };
 
   useEffect(() => {

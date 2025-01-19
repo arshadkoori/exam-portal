@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { profile } from "./utils/helpers"; // Ensure this is properly implemented
+import { profile } from "./utils/helpers";
 import exam2 from "./images/exam2.png";
 
 import "./css/login.css";
