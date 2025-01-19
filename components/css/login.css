@@ -62,8 +62,21 @@
   outline: none;
   transition: all 0.3s ease;
   background: #f9f9f9;
+  font-weight: bolder;
 }
 
+input::placeholder {
+  letter-spacing: normal;
+}
+
+
+input[type="text"] {
+  letter-spacing: .2rem;
+}
+
+input[type="password"] {
+  letter-spacing: .5rem;
+}
 .loginForm input:focus {
   border-color: #4facfe;
   box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);

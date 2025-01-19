@@ -72,6 +72,18 @@
   transition: all 0.3s ease;
 }
 
+input::placeholder {
+  letter-spacing: normal;
+}
+
+
+input[type="text"], [type="email"] {
+  letter-spacing: .2rem;
+}
+
+input[type="password"] {
+  letter-spacing: .5rem;
+}
 .registerForm input:focus,
 .registerForm select:focus {
   border-color: #4facfe;

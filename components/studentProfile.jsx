@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import "./css/studentProfile.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaUser, FaEnvelope, FaUserTie } from "react-icons/fa";
 
 export default function StudentProfile() {
   const [user, setUser] = useState(null);
@@ -42,7 +43,7 @@ export default function StudentProfile() {
   if (!user) return <p>No user data available.</p>;
 
   //
-  // 
+  //
   //
 
   return (
@@ -60,25 +61,22 @@ export default function StudentProfile() {
           />
         </div>
       </div>
-
-      <div className="studentProfileData">
-        <table>
-          <tbody>
-            <tr>
-              <td>Username</td>
-              <td>{user.username}</td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{user.email}</td>
-            </tr>
-            <tr>
-              <td>Role</td>
-              <td>{user.role}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="profileItem">
+        <FaUser className="icon" />
+        <span className="profileLabel">Username:</span>
+        <span className="profileData">{user.username}</span>
       </div>
+      <div className="profileItem">
+        <FaEnvelope className="icon" />
+        <span className="profileLabel">Email:</span>
+        <span className="profileData">{user.email}</span>
+      </div>
+      <div className="profileItem">
+        <FaUserTie className="icon" />
+        <span className="profileLabel">Role:</span>
+        <span className="profileData">{user.role}</span>
+      </div>
+
     </div>
   );
 }
