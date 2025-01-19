@@ -20,7 +20,8 @@ function Dashboard() {
       {/* Navbar */}
       <nav className="dashboardNavbar">
         <div className="navbar-brand">
-          <img src={logo4} alt="Logo" className="dashboardLogo" />
+          {/* <img src={logo4} alt="Logo" className="dashboardLogo" /> */}
+          <span className="navbar-brand-span">OnlineTestify</span>
         </div>
         {/* Menu Button */}
         <button className="menu-button" onClick={toggleMenu}>

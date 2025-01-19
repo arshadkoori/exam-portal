@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("../components/fonts/Montserrat/static/Montserrat-Regular.ttf");
+}
+
 * {
-    user-select: none;
+  user-select: none;
+  font-family: "Montserrat";
 }

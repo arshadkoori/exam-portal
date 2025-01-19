@@ -1,5 +1,10 @@
+@font-face {
+  font-family: "Pacifico";
+  src: url("../fonts/Pacifico/Pacifico-Regular.ttf");
+}
+
 * {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -32,6 +37,13 @@
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.navbar-brand-span {
+  font-family: "Pacifico";
+  font-size: 1.2rem;
+  /* color: #2c3e50; */
+  color: #6a5acd;
 }
 
 .dashboardLogo {
