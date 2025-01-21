@@ -21,6 +21,8 @@ import ExamTitles from "../components/examTitles";
 import ExamQuestions from "../components/examQuestions";
 import ProtectedRoute from "../components/protectedRoute";
 
+import StudentMarksPage from "../components/studentMarksPage";
+
 import "./App.css";
 
 if (import.meta.env.DEV) {
@@ -44,6 +46,8 @@ function App() {
           <Route path="/exams" element={<ExamTitles />} />
           <Route path="/exam/:id" element={<ExamQuestions />} />
           <Route path="/student-profile" element={<StudentProfile />} />
+          <Route path="/student-mark" element={<StudentMarksPage />} />
+          
           {/* <Route path="/show-marks" element={<ShowMarks />} /> */}
         </Route>
 

@@ -27,6 +27,10 @@ export default function StudentDashboard() {
         <Link to="/exams">
           <button className="studentDashboardButton">Go to exam</button>
         </Link>
+
+        <Link to="/student-mark">
+          <button className="studentDashboardButton">Check marks</button>
+        </Link>
         <div className="studentDashboardImgDiv">
           <img src={student_dashboard} alt="studentDashboardImg" />
         </div>

@@ -225,3 +225,84 @@ export const deleteExam = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+// // Controller function to get exams for a student
+// export const getExamsByStudent = async (req, res) => {
+//   try {
+//     const { studentId } = req.params;
+
+//     // Fetch all exams for the student
+//     const exams = await Exam.find({ studentId });
+
+//     if (!exams.length) {
+//       return res.status(404).json({ msg: "No exams found for the student." });
+//     }
+
+//     console.log("Fetched exams:", exams); // Add this line for debugging
+
+//     // Calculate total marks
+//     const totalMarks = exams.reduce((total, exam) => total + exam.marks, 0);
+
+//     res.status(200).json({
+//       exams,
+//       totalMarks,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ msg: "Server error. Failed to fetch exams." });
+//   }
+// };
+
+
+
+// // Get marks for a student
+// export const getStudentMarks = async (req, res) => {
+//   const { studentId } = req.params; // Get studentId from the URL parameter
+
+//   try {
+//     const studentMarks = await StudentMarks.find({ studentId })
+//       .populate("examId", "examName") // Populate exam name from the Exam collection
+//       .exec();
+
+//     if (!studentMarks.length) {
+//       return res.status(404).json({ msg: "No exams found for this student." });
+//     }
+
+//     // Calculate total marks
+//     const totalMarks = studentMarks.reduce((total, mark) => total + mark.score, 0);
+
+//     res.status(200).json({
+//       exams: studentMarks.map(mark => ({
+//         examName: mark.examId.examName,
+//         marks: mark.score
+//       })),
+//       totalMarks: totalMarks,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ msg: "Error fetching student marks", error: error.message });
+//   }
+// };
+
+
+export const getStudentMarks = async (req, res) => {
+  try {
+    const studentMarks = await StudentMarks.find({ studentId: req.params.studentId }).populate("examId");
+
+    // Log the fetched student marks to check the data structure
+    console.log("Fetched Student Marks:", studentMarks);
+
+    let totalMarks = studentMarks.reduce((acc, mark) => acc + mark.score, 0);
+
+    res.status(200).json({
+      exams: studentMarks.map(mark => ({
+        examName: mark.examId.name, // Assuming exam has a name field
+        marks: mark.score
+      })),
+      totalMarks: totalMarks,
+    });
+  } catch (err) {
+    console.error("Error fetching marks:", err);
+    res.status(500).json({ msg: "Server error" });
+  }
+};

@@ -8,6 +8,7 @@ import {
   getStudentExams,
   updateQuestion,
   deleteExam,
+  getStudentMarks
 } from "../requesthandlers/exam.handler.js";
 
 import { verifyToken } from "../middleware/auth.js";
@@ -42,7 +43,10 @@ router.get("/student/exams", getStudentExams);
 router.put("/api/exam/:examId/questions/:questionId", updateQuestion);
 
 // DELETE: Delete an exam by its ID
-router.delete('/exam/:examId', deleteExam);
+router.delete("/exam/:examId", deleteExam);
+
+// Route to get student marks by studentId
+router.get("/exams/:studentId", getStudentMarks);
 
 router.post("/saveMarks", saveMarks);
 router.get(

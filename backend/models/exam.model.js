@@ -9,6 +9,8 @@ const examSchema = new mongoose.Schema(
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     instructorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor', required: true },
     instructorName: { type: String, required: true },
+    // studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student", required: true },
+    // marks: { type: Number, required: true },
   },
   { timestamps: true }
 );
