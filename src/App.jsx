@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  BrowserRouter,
   Navigate,
 } from "react-router-dom";
 import axios from "axios";
