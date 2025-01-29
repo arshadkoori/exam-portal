@@ -1,6 +1,6 @@
 import Exam from "../models/exam.model.js";
 import Question from "../models/question.model.js";
-import StudentMarks from "../models/students.mark.model.js"; // Model to store marks
+import StudentMarks from "../models/students.mark.model.js";
 
 export const createExam = async (req, res) => {
   try {
@@ -28,9 +28,7 @@ export const createExam = async (req, res) => {
       })
     );
 
-    //
-
-    const passwordRegex = /^\d{10}$/; // Regex to validate 10 numeric digits
+    const passwordRegex = /^\d{10}$/;
     if (!passwordRegex.test(examPassword)) {
       return res
         .status(400)
@@ -57,16 +55,6 @@ export const createExam = async (req, res) => {
   }
 };
 
-// export const getExams = async (req, res) => {
-//   try {
-//     const exams = await Exam.find().populate("questions");
-//     res.status(200).json(exams);
-//   } catch (error) {
-//     console.error("Error fetching exams:", error);
-//     res.status(500).json({ message: "Error fetching exams" });
-//   }
-// };
-
 export const getExams = async (req, res) => {
   const { instructorId } = req.query;
 
@@ -74,7 +62,7 @@ export const getExams = async (req, res) => {
     const exams = await Exam.find({ instructorId }).populate("questions");
 
     if (!Array.isArray(exams)) {
-      return res.status(200).json([]); // Ensure an array is returned
+      return res.status(200).json([]);
     }
 
     res.status(200).json(exams);
@@ -98,7 +86,7 @@ export const getExamTitles = async (req, res) => {
 
 export const getExamQuestions = async (req, res) => {
   const { id } = req.params;
-  const { password } = req.query; // Expect the password to be sent as a query parameter
+  const { password } = req.query;
 
   try {
     const exam = await Exam.findById(id).populate("questions");
@@ -226,77 +214,17 @@ export const deleteExam = async (req, res) => {
   }
 };
 
-
-// // Controller function to get exams for a student
-// export const getExamsByStudent = async (req, res) => {
-//   try {
-//     const { studentId } = req.params;
-
-//     // Fetch all exams for the student
-//     const exams = await Exam.find({ studentId });
-
-//     if (!exams.length) {
-//       return res.status(404).json({ msg: "No exams found for the student." });
-//     }
-
-//     console.log("Fetched exams:", exams); // Add this line for debugging
-
-//     // Calculate total marks
-//     const totalMarks = exams.reduce((total, exam) => total + exam.marks, 0);
-
-//     res.status(200).json({
-//       exams,
-//       totalMarks,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ msg: "Server error. Failed to fetch exams." });
-//   }
-// };
-
-
-
-// // Get marks for a student
-// export const getStudentMarks = async (req, res) => {
-//   const { studentId } = req.params; // Get studentId from the URL parameter
-
-//   try {
-//     const studentMarks = await StudentMarks.find({ studentId })
-//       .populate("examId", "examName") // Populate exam name from the Exam collection
-//       .exec();
-
-//     if (!studentMarks.length) {
-//       return res.status(404).json({ msg: "No exams found for this student." });
-//     }
-
-//     // Calculate total marks
-//     const totalMarks = studentMarks.reduce((total, mark) => total + mark.score, 0);
-
-//     res.status(200).json({
-//       exams: studentMarks.map(mark => ({
-//         examName: mark.examId.examName,
-//         marks: mark.score
-//       })),
-//       totalMarks: totalMarks,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ msg: "Error fetching student marks", error: error.message });
-//   }
-// };
-
-
 export const getStudentMarks = async (req, res) => {
   try {
     const studentMarks = await StudentMarks.find({ studentId: req.params.studentId }).populate("examId");
 
-    // Log the fetched student marks to check the data structure
     console.log("Fetched Student Marks:", studentMarks);
 
     let totalMarks = studentMarks.reduce((acc, mark) => acc + mark.score, 0);
 
     res.status(200).json({
       exams: studentMarks.map(mark => ({
-        examName: mark.examId.name, // Assuming exam has a name field
+        examName: mark.examId.name,
         marks: mark.score
       })),
       totalMarks: totalMarks,

@@ -1,11 +1,10 @@
 
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-// import jwtDecode from "jwt-decode"; // Correctly import jwtDecode
 import { jwtDecode } from "jwt-decode";
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const token = localStorage.getItem("token"); // Replace 'token' with your actual token key if different
+  const token = localStorage.getItem("token"); 
   console.log(token);
   if (!token) {
     return <Navigate to="/" replace />;

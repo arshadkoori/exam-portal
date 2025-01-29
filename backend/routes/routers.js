@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as user from "../requesthandlers/user.handler.js";
 import { authenticateToken, authorizeRoles } from "../middleware/auth.js";
 
+
 import {
   createExam,
   saveMarks,
@@ -11,7 +12,7 @@ import {
   getStudentMarks
 } from "../requesthandlers/exam.handler.js";
 
-import { verifyToken } from "../middleware/auth.js";
+// import { verifyToken } from "../middleware/auth.js";
 
 import auth from "../middleware/auth.js";
 
@@ -27,8 +28,8 @@ const router = Router();
 
 router.route("/register").post(user.register);
 router.route("/login").post(user.login);
-router.route("/request-password-reset").post(user.requestPasswordReset);
-router.route("/change-password").post(user.changePassword);
+// router.route("/request-password-reset").post(user.requestPasswordReset);
+// router.route("/change-password").post(user.changePassword);
 router.route("/profile").get(auth, user.profile);
 
 router.post("/api/exam", createExam);

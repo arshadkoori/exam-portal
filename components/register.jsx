@@ -1,8 +1,8 @@
-//  Akash
+//  register
 
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import toBase64 from "./utils/converters";
 import avatar from "./images/Avatar.png";
@@ -13,8 +13,8 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("student"); // Default to "student"
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [role, setRole] = useState("student");
+  const navigate = useNavigate();
 
   const [image, setImage] = useState(null);
 

@@ -10,10 +10,7 @@ const schema = new mongoose.Schema({
     required: true,
     unique: true,
     lowercase: true,
-    match: [
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      "Please enter a valid email address",
-    ],
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address"],
   },
   password: {
     type: String,
@@ -30,6 +27,11 @@ const schema = new mongoose.Schema({
     required: false,
     unique: false,
   },
+
+  //
+  // isVerified: { type: Boolean, default: false },
+  // verificationToken: { type: String },
+  //
   resetPasswordToken: String,
   resetPasswordExpires: Date,
 });

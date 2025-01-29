@@ -56,7 +56,7 @@ export async function register(req, res) {
   }
 }
 
-// // Login
+// Login
 export async function login(req, res) {
     try {
         const { username, password } = req.body;
@@ -83,64 +83,64 @@ export async function login(req, res) {
 }
 
 // Request Password Reset
-export async function requestPasswordReset(req, res) {
-  try {
-    const { email } = req.body;
-    const user = await userModel.findOne({ email });
-    if (user) {
-      const resetToken = crypto.randomBytes(20).toString("hex");
-      user.resetPasswordToken = resetToken;
-      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-      await user.save();
+// export async function requestPasswordReset(req, res) {
+//   try {
+//     const { email } = req.body;
+//     const user = await userModel.findOne({ email });
+//     if (user) {
+//       const resetToken = crypto.randomBytes(20).toString("hex");
+//       user.resetPasswordToken = resetToken;
+//       user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+//       await user.save();
 
-      const resetUrl = `http://localhost:${process.env.VITE_PORT}/reset-password/${resetToken}`;
-      const mailOptions = {
-        to: email,
-        from: "arjunktp88@gmail.com",
-        subject: "Password Reset",
-        text: `Click the link to reset your password: ${resetUrl}`,
-      };
+//       const resetUrl = `http://localhost:${process.env.VITE_PORT}/reset-password/${resetToken}`;
+//       const mailOptions = {
+//         to: email,
+//         from: "akashkrishnan806@gmail.com",
+//         subject: "Password Reset",
+//         text: `Click the link to reset your password: ${resetUrl}`,
+//       };
 
-      transporter.sendMail(mailOptions, (err) => {
-        if (err) console.error("Email failed:", err);
-      });
-    }
+//       transporter.sendMail(mailOptions, (err) => {
+//         if (err) console.error("Email failed:", err);
+//       });
+//     }
 
-    // Always send the same response for security
-    return res
-      .status(200)
-      .json({ msg: "If this email exists, a reset link has been sent" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ msg: "Failed to request password reset" });
-  }
-}
+//     // Always send the same response for security
+//     return res
+//       .status(200)
+//       .json({ msg: "If this email exists, a reset link has been sent" });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ msg: "Failed to request password reset" });
+//   }
+// }
 
 // Change Password
-export async function changePassword(req, res) {
-  try {
-    const { resetToken, newPassword } = req.body;
-    const user = await userModel.findOne({
-      resetPasswordToken: resetToken,
-      resetPasswordExpires: { $gt: Date.now() },
-    });
+// export async function changePassword(req, res) {
+//   try {
+//     const { resetToken, newPassword } = req.body;
+//     const user = await userModel.findOne({
+//       resetPasswordToken: resetToken,
+//       resetPasswordExpires: { $gt: Date.now() },
+//     });
 
-    if (!user) {
-      return res.status(400).json({ msg: "Invalid or expired token" });
-    }
+//     if (!user) {
+//       return res.status(400).json({ msg: "Invalid or expired token" });
+//     }
 
-    // Update password and clear reset token
-    user.password = await bcrypt.hash(newPassword, 10);
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
+//     // Update password and clear reset token
+//     user.password = await bcrypt.hash(newPassword, 10);
+//     user.resetPasswordToken = undefined;
+//     user.resetPasswordExpires = undefined;
+//     await user.save();
 
-    return res.status(200).json({ msg: "Password changed successfully" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ msg: "Failed to change password" });
-  }
-}
+//     return res.status(200).json({ msg: "Password changed successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ msg: "Failed to change password" });
+//   }
+// }
 
 
 // profile

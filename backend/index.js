@@ -8,12 +8,9 @@ import examRoutes from './routes/routers.js';
 
 import User from "./models/user.model.js";
 
-import mongoose from "mongoose";
-
 import connect from "./connection.js";
 import router from "./routes/routers.js";
-
-import Exam from "./models/question.model.js";
+import { authenticateToken } from "./middleware/auth.js";
 
 dotenv.config();
 const app = express();
@@ -41,7 +38,6 @@ app.get("/api/user", async (req, res) => {
 });
 
 
-import { authenticateToken } from "./middleware/auth.js";
 
 router.get("/api/user", authenticateToken, async (req, res) => {
   try {
