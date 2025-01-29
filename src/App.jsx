@@ -32,7 +32,7 @@ if (import.meta.env.DEV) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Toaster />
       <Routes>
         <Route path="/" element={<Dashboard />} />
@@ -61,7 +61,7 @@ function App() {
           <Route path="/instructor-profile" element={<InstructorProfile />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
