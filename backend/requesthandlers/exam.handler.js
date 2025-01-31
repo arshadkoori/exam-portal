@@ -48,7 +48,7 @@ export const createExam = async (req, res) => {
 
     res.status(201).json({ message: "Exam created successfully" });
   } catch (error) {
-    console.error("Error creating exam:", error); // Log the error for debugging
+    console.error("Error creating exam:", error);
     res
       .status(500)
       .json({ message: "Error creating exam", error: error.message });

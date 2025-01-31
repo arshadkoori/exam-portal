@@ -5,12 +5,11 @@ import "./css/ShowExams.css";
 import toast from "react-hot-toast";
 
 const ShowExams = () => {
-  const [exams, setExams] = useState([]); // Store exams
-  const [loading, setLoading] = useState(true); // Loading state
-  const [editQuestion, setEditQuestion] = useState(null); // Question to edit
-  const [showModal, setShowModal] = useState(false); // Modal visibility
+  const [exams, setExams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editQuestion, setEditQuestion] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  // Fetch exams created by the logged-in instructor
   useEffect(() => {
     const fetchExams = async () => {
       try {
@@ -29,32 +28,27 @@ const ShowExams = () => {
     fetchExams();
   }, []);
 
-  // Open the modal to edit a question
   const handleEditClick = (question, examId) => {
-    setEditQuestion({ ...question, examId }); // Attach examId to question
+    setEditQuestion({ ...question, examId });
     setShowModal(true);
   };
 
-  // Update the input fields in the modal
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditQuestion((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Update options in the modal
   const handleOptionChange = (index, value) => {
     const updatedOptions = [...editQuestion.options];
     updatedOptions[index] = value;
     setEditQuestion((prev) => ({ ...prev, options: updatedOptions }));
   };
 
-  // Handle change of the correct answer (from input to select)
   const handleCorrectAnswerChange = (e) => {
     const selectedAnswer = e.target.value;
     setEditQuestion((prev) => ({ ...prev, correctAnswer: selectedAnswer }));
   };
 
-  // Save changes to the question
   const handleSaveChanges = async () => {
     try {
       const {
@@ -74,7 +68,6 @@ const ShowExams = () => {
         }
       );
 
-      // Update the exams list locally
       setExams((prevExams) =>
         prevExams.map((exam) =>
           exam._id === examId
@@ -89,18 +82,16 @@ const ShowExams = () => {
       );
       toast.success("Exam updated successfully");
 
-      setShowModal(false); // Close modal
-      setEditQuestion(null); // Reset state
+      setShowModal(false);
+      setEditQuestion(null);
     } catch (error) {
       console.error("Error saving changes:", error);
     }
   };
 
-  // Delete the exam and its questions
   const handleDeleteExam = async (examId) => {
     try {
       const response = await axios.delete(`/api/exam/${examId}`);
-      // Remove the deleted exam from the exams list
       setExams((prevExams) => prevExams.filter((exam) => exam._id !== examId));
       toast.success("Exam deleted successfully");
     } catch (error) {

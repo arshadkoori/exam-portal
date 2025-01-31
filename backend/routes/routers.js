@@ -12,8 +12,6 @@ import {
   getStudentMarks
 } from "../requesthandlers/exam.handler.js";
 
-// import { verifyToken } from "../middleware/auth.js";
-
 import auth from "../middleware/auth.js";
 
 import {

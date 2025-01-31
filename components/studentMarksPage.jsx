@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { profile } from "./utils/helpers"; // Assuming profile helper fetches user data
+import { profile } from "./utils/helpers";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { FaBook, FaPen, FaRegCheckCircle } from "react-icons/fa"; // Icons for exam and marks
+import { FaBook, FaPen, FaRegCheckCircle } from "react-icons/fa";
 import "./css/studentMarksPage.css";
 
 export default function StudentMarksPage() {
@@ -13,24 +13,20 @@ export default function StudentMarksPage() {
 
   const navigate = useNavigate();
 
-  // Handle logout
   const logout = () => {
     localStorage.clear();
     navigate("/", { replace: true });
     window.location.reload();
   };
 
-  // Fetch user profile and their exam data
   useEffect(() => {
     profile()
       .then((userData) => {
         setUser(userData);
 
-        // Fetch exam marks for the student
         fetch(`/api/exams/${userData.studentId}`)
           .then((res) => res.json())
           .then((data) => {
-            // Log the response data to check it
             console.log("Fetched Exam Data:", data);
 
             if (data.exams) {
@@ -53,10 +49,8 @@ export default function StudentMarksPage() {
       });
   }, []);
 
-  // Show loading text if still fetching data
   if (loading) return <p>Loading...</p>;
 
-  // Show error if no user data is found
   if (!user) return <p>No user data available.</p>;
 
   return (

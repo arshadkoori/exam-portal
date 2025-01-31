@@ -1,5 +1,4 @@
 //  register
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +34,7 @@ function Register() {
         image,
       });
       toast.success(response.data.msg);
-      navigate("/login"); // Redirect to the success page
+      navigate("/login");
     } catch (error) {
       toast.error(error.response.data.msg);
     }

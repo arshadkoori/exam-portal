@@ -14,14 +14,14 @@ const AddExam = () => {
     },
   ]);
   const [examTitle, setExamTitle] = useState("");
-  const [examPassword, setExamPassword] = useState(""); // New state for exam password
-  const [instructorDetails, setInstructorDetails] = useState(null); // Store instructor details
+  const [examPassword, setExamPassword] = useState("");
+  const [instructorDetails, setInstructorDetails] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedInstructor = localStorage.getItem("instructor");
     if (storedInstructor) {
-      setInstructorDetails(JSON.parse(storedInstructor)); // Parse instructor details
+      setInstructorDetails(JSON.parse(storedInstructor));
     } else {
       toast.error("Instructor details not found. Please log in again.");
       navigate("/instructor-dashboard");
@@ -54,7 +54,7 @@ const AddExam = () => {
       return toast.error("Please provide an exam title.");
     }
 
-    const passwordRegex = /^\d{10}$/; // Regex to validate 10 numeric digits
+    const passwordRegex = /^\d{10}$/;
     if (!passwordRegex.test(examPassword)) {
       return toast.error(
         "Exam password must be exactly 10 numeric digits (no letters or symbols)."

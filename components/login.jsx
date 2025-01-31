@@ -16,11 +16,10 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post("/api/login", { username, password });
-      localStorage.setItem("token", response.data.token); // Store the token
+      localStorage.setItem("token", response.data.token);
       console.log("Token stored:", response.data.token);
 
-      // Fetch profile data after successful login
-      const userData = await profile(); // Fetch user profile (e.g., using a helper function)
+      const userData = await profile();
       console.log("User Data:", userData);
 
       const role = userData.role;
@@ -35,7 +34,6 @@ export default function Login() {
       };
       localStorage.setItem("instructor", JSON.stringify(instructor));
 
-      // Navigate based on role
       if (role === "student") {
         navigate("/student-dashboard");
         toast.success("Login successfull");

@@ -58,7 +58,7 @@ const ExamQuestions = () => {
   };
 
   const handleSubmit = async () => {
-    clearInterval(intervalId); // Stop the timer when the exam is submitted
+    clearInterval(intervalId);
     let totalScore = 0;
 
     exam.questions.forEach((question, index) => {
@@ -68,9 +68,8 @@ const ExamQuestions = () => {
     });
 
     setScore(totalScore);
-    setIsExamFinished(true); // Show the results after submission
+    setIsExamFinished(true);
 
-    // Save the student's score to the database
     try {
       await axios.post("/api/saveMarks", {
         studentId,
@@ -90,7 +89,7 @@ const ExamQuestions = () => {
       setTimer((prevTimer) => {
         if (prevTimer <= 1) {
           clearInterval(newIntervalId);
-          setIsExamFinished(true); // End the exam when the timer reaches 0
+          setIsExamFinished(true);
           return 0;
         }
         return prevTimer - 1;

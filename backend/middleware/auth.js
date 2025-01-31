@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export function authenticateToken(req, res, next) {
-  const token = req.headers["authorization"]?.split(" ")[1]; // Extract token from Bearer header
+  const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     return res
       .status(401)
@@ -63,7 +63,3 @@ export const verifyToken = (req, res, next) => {
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };
-
-
-// 
-// 
